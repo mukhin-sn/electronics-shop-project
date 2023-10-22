@@ -23,6 +23,12 @@ class Item:
 
         # Item.all.append(self)
 
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
+
+    def __str__(self):
+        return f"{self.name}"
+
     @property
     def name(self):
         return self.__name
@@ -53,14 +59,19 @@ class Item:
         """
         Класс-метод, инициализирующий экземпляры класса Item данными из файла src/items.csv
         """
+        cls.all.clear()
+        print(cls.all)
+
         with open(file_name) as data_file:
             read_file = csv.DictReader(data_file)
             fieldnames = read_file.fieldnames
+            print(f"\n{fieldnames}")
             for file in read_file:
                 name = file[fieldnames[0]]
                 price = file[fieldnames[1]]
                 quantity = file[fieldnames[2]]
                 cls.all.append(cls(name, price, quantity))
+        print(Item.all)
 
     @staticmethod
     def string_to_number(string):
