@@ -57,3 +57,11 @@ def test__repr__():
 def test__str__():
     item_5 = Item("Принтер", 35000, 40)
     assert str(item_5) == "Принтер"
+
+
+def test_add():
+    item_6 = Item("Станок", 100000, 10)
+    item_7 = Item("Процессор", 24000, 100)
+    assert item_6 + item_7 == 110
+    with pytest.raises(ValueError):
+        item_6 + 125
