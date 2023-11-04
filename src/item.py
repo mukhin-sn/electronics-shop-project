@@ -1,4 +1,5 @@
 import csv
+from src.instantiate_csv_error import *
 
 
 class Item:
@@ -61,19 +62,24 @@ class Item:
         self.price *= self.pay_rate
 
     @classmethod
-    def instantiate_from_csv(cls, file_name):
+    def instantiate_from_csv(cls, file_name='../src/items.csv'):
         """
         Класс-метод, инициализирующий экземпляры класса Item данными из файла src/items.csv
         """
         cls.all.clear()
-        with open(file_name) as data_file:
-            read_file = csv.DictReader(data_file)
-            fieldnames = read_file.fieldnames
-            for file in read_file:
-                name = file[fieldnames[0]]
-                price = file[fieldnames[1]]
-                quantity = file[fieldnames[2]]
-                cls(name, price, quantity)
+        try:
+            with open(file_name) as data_file:
+                read_file = csv.DictReader(data_file)
+                fieldnames = read_file.fieldnames
+                for file in read_file:
+                    name = file[fieldnames[0]]
+                    price = file[fieldnames[1]]
+                    quantity = file[fieldnames[2]]
+                    cls(name, price, quantity)
+        except FileNotFoundError:
+            print(f"Отсутствует файл {file_name}")
+        else:
+            print("OK")
 
     @staticmethod
     def string_to_number(string):
