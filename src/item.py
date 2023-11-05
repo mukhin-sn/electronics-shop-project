@@ -71,15 +71,16 @@ class Item:
             with open(file_name) as data_file:
                 read_file = csv.DictReader(data_file)
                 fieldnames = read_file.fieldnames
+                InstError(fieldnames)
                 for file in read_file:
                     name = file[fieldnames[0]]
                     price = file[fieldnames[1]]
                     quantity = file[fieldnames[2]]
                     cls(name, price, quantity)
         except FileNotFoundError:
-            print(f"Отсутствует файл {file_name}")
-        else:
-            print("OK")
+            print(f"Отсутствует файл {file_name.split('/')[-1]}")
+        except InstantiateCSVError:
+            print(f"Файл {file_name.split('/')[-1]} поврежден")
 
     @staticmethod
     def string_to_number(string):
