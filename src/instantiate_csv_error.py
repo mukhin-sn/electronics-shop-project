@@ -1,7 +1,7 @@
 class InstantiateCSVError(Exception):
     """Класс - исключение"""
-    def __init__(self):
-        self.message = 'Файл поврежден'
+    def __init__(self, message='Файл поврежден', *args):
+        super().__init__(message, *args)
 
 
 class InstError:
